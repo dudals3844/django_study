@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question</title>
+</head>
+<body>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+<div class="content my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>Number</th>
+            <th>Title</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if question_list %}
+        {% for question in question_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="{% url 'pybo:detail' question.id %}">
+                    {{ question.subject }}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tf>
+            <td colspan="3">I have a question</td>
+        </tf>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
