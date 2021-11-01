@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+
+from .forms import QuestionForm
 from .models import Question
 
 
@@ -21,6 +23,7 @@ def detail(request, question_id):
     context = {'question': question}
     return render(request, 'question_detail.html', context)
 
+
 def answer_create(request, question_id):
     '''
     Answer
@@ -29,5 +32,24 @@ def answer_create(request, question_id):
     :return:
     '''
     question = get_object_or_404(Question, pk=question_id)
-    question.answer_set.create(content=request.POST.get('content'),create_date=timezone.now())
+    question.answer_set.create(content=request.POST.get('content'), create_date=timezone.now())
     return redirect('pybo:detail', question_id=question.id)
+
+def question_create(request):
+    '''
+    Add pybo quesion
+    :param request:
+    :return:
+    '''
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.create_date = timezone.now()
+            question.save()
+            return redirect('pybo:index')
+
+    else:
+        form = QuestionForm()
+    context = {'form': form}
+    return render(request, 'question_form.html', context)
