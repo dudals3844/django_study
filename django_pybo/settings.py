@@ -37,6 +37,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # pybo config
     'django.contrib.admin',
+    'common.apps.CommonConfig',
+    # default settind
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
