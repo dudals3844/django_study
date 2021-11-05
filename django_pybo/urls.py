@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from pybo import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # pybo 폴더에 urls.py 파일
     path('pybo/', include('pybo.urls')),
+    # common 폴더에 urls.py 파일
     path('common/', include('common.urls')),
+    path('', views.index, name='index'),
 ]
