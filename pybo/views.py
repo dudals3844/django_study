@@ -142,3 +142,18 @@ def answer_modify(request, answer_id):
         form = AnswerForm(instance=answer)
     context = {'answer': answer, 'form': form}
     return render(request, 'answer_form.html', context)
+
+@login_required(login_url='common:login')
+def answer_delete(request, answer_id):
+    '''
+    pybo answer delete
+    :param request:
+    :param answer_id:
+    :return:
+    '''
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.user != answer.author:
+        messages.error(request, "No Auth to Delete")
+    else:
+        answer.delete()
+    return redirect('pybo:detail', question_id=answer.question.id)
